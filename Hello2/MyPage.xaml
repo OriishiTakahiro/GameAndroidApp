@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Hello2.MyPage" Title="ボタン迷宮">
+	<ContentPage.Content>
+		<Label x:Name="SttsLabel" Text="Translated to a new Page !"/>
+	</ContentPage.Content>
+</ContentPage>

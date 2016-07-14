@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Hello2" x:Class="Hello2.Hello2Page">
+
+	<StackLayout Padding="10,0">
+		<Label
+			x:Name = "Hoge"
+			Text="Welcome to Xamarin Forms!"
+			HorizontalOptions="Center"
+			VerticalOptions="Center"
+		/>
+		<Button
+			Text="Button"
+			HorizontalOptions="Center"
+			VerticalOptions="Center"
+		/>
+		<Switch
+			HorizontalOptions="Center"
+			VerticalOptions="Center"
+		/>
+		<Slider
+			VerticalOptions="Center"
+		/>
+		<ScrollView VerticalOptions ="LayoutOptions.FillAndExpand">
+			<ListView x:Name="ListViewComponent" RowHeight="50"/>
+		</ScrollView>
+	</StackLayout>
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="edit" Order="Primary">
+			<ToolbarItem.Icon>
+				<OnPlatform
+					x:TypeArguments="FileImageSource"
+					iOS="edit.png"
+					Android="ic_action_edit.png"
+				/>
+			</ToolbarItem.Icon>
+		</ToolbarItem>
+		<ToolbarItem Text="search" Order="Primary">
+			<ToolbarItem.Icon>
+				<OnPlatform
+					x:TypeArguments="FileImageSource"
+					iOS="search.png"
+					Android="ic_action_seach.png"
+				/>
+			</ToolbarItem.Icon>
+		</ToolbarItem>
+		<ToolbarItem Text="refresh" Order="Primary">
+			<ToolbarItem.Icon>
+				<OnPlatform
+					x:TypeArguments="FileImageSource"
+					iOS="reload.png"
+					Android="ic_action_refresh.png"
+				/>
+			</ToolbarItem.Icon>
+		</ToolbarItem>
+		<ToolbarItem Text="explore" Order="Primary"/>
+		<ToolbarItem Text="discover" Order="Primary"/>
+		<ToolbarItem Text="evolve" Order="Primary"/>
+	</ContentPage.ToolbarItems>
+
+</ContentPage>
