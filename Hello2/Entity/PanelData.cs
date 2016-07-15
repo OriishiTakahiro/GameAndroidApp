@@ -33,33 +33,33 @@ namespace Hello2 {
 			{ Kind.portal, panel => {
 					panel.stayable = false;
 					panel.SetEmpty();
-					CharaData.GetCharDat().ReturnStart();
+					CharaData.chardat.ReturnStart();
 					return false;
 			}},
 			{ Kind.empty, panel => { panel.stayable = false; return false; } },
 			{ Kind.up, panel => { 
 					panel.stayable = false;
-					CharaData.GetCharDat().direction = 0;
+					CharaData.chardat.direction = 0;
 					return false;
 			}},
 			{ Kind.right, panel => {
 					panel.stayable = false;
-					CharaData.GetCharDat().direction = 1;
+					CharaData.chardat.direction = 1;
 					return false;
 			} },
 			{ Kind.down, panel => {
 					panel.stayable = false;
-					CharaData.GetCharDat().direction = 2;
+					CharaData.chardat.direction = 2;
 					return false;
 			}},
 			{ Kind.left, panel => {
 					panel.stayable = false;
-					CharaData.GetCharDat().direction = 3;
+					CharaData.chardat.direction = 3;
 					return true;
 			}},
 			{ Kind.jump, panel => {
 					panel.stayable = false;
-					CharaData.GetCharDat().Jump();
+					CharaData.chardat.Jump();
 					return false;
 			}},
 			{ Kind.reverse, panel => {

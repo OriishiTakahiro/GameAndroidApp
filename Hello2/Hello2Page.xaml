@@ -3,22 +3,13 @@
 
 	<StackLayout Padding="10,0">
 		<Label
-			x:Name = "Hoge"
-			Text="Welcome to Xamarin Forms!"
+			Text="ボタン迷宮"
 			HorizontalOptions="Center"
 			VerticalOptions="Center"
+			FontSize="60"
 		/>
-		<Button
-			Text="Button"
-			HorizontalOptions="Center"
-			VerticalOptions="Center"
-		/>
-		<Switch
-			HorizontalOptions="Center"
-			VerticalOptions="Center"
-		/>
-		<Slider
-			VerticalOptions="Center"
+		<Label
+			Text="挑戦するステージを選んでね."
 		/>
 		<ScrollView VerticalOptions ="LayoutOptions.FillAndExpand">
 			<ListView x:Name="ListViewComponent" RowHeight="50"/>

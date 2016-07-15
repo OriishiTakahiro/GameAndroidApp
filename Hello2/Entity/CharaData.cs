@@ -21,11 +21,6 @@ namespace Hello2 {
 			this.jumping = false;
 		}
 
-		public static CharaData GetCharDat() {
-			if (chardat == null) chardat = new CharaData();
-			return chardat;
-		}
-
 		public static void Init() {
 			chardat = new CharaData();
 		}

@@ -111,11 +111,11 @@ namespace Hello2 {
 				while (!is_goal) {
 					await Task.Delay(1000);
 					var i = 0;
-					for (; i < 3; i++) {
+					for (; i < 4; i++) {
 						if (chara.CanMove()) break;
 						else chara.RotateDir();
 					}
-					if (i == 3) break;
+					if (i == 4) break;
 					is_goal = chara.Move();
 					jewel_counter.Text = MapData.mapdat.jewel_count + "/" + MapData.mapdat.jewel_max;
 				}
@@ -130,7 +130,7 @@ namespace Hello2 {
 
 		// --- Transaction for GameOver ---
 		private async void GameOver() {
-			await DisplayAlert("Game Over", "ゴールにたどり着けませんでした", "終了");
+			await DisplayAlert("Game Over", "ゴールできませんでした.", "終了");
 		}
 		// --- Transaction for GameOver ---
 
