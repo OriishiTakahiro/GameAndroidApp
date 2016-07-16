@@ -27,8 +27,8 @@ namespace Hello2 {
 
 		private async void GetMapData() {
 			this.IsBusy = true;
-			HttpService client = new HttpService("13.71.155.33", "/mapmaker/get_mapdata", new Dictionary<string, string> { { "id", "" + selected_id } });
-			var jmap = JArray.Parse(await client.download());
+			HttpWrapper client = new HttpWrapper("13.71.155.33", "/mapmaker/get_mapdata", new Dictionary<string, string> { { "id", "" + selected_id } });
+			var jmap = JArray.Parse(await client.GetMsg());
 			var mapdat = MapData.New(jmap);
 			mapdat.map[0][0].img.Source = "d_man_" + Panel.IMAGES[mapdat.map[0][0].kind];
 

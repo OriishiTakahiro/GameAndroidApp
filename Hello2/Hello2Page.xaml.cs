@@ -15,8 +15,8 @@ namespace Hello2 {
 		}
 		private async void loadData() {
 			this.IsBusy = true;
-			HttpService client = new HttpService("13.71.155.33", "/mapmaker/get_maplist", null);
-			string response = await client.download();
+			var client = new HttpWrapper("13.71.155.33", "/mapmaker/get_maplist", null);
+			string response = await client.GetMsg();
 			var jarr = JArray.Parse(response);
 
 			ListView maplist = ListViewComponent;

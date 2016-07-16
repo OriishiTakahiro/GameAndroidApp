@@ -47,11 +47,10 @@
     <Compile Include="MyPage.xaml.cs">
       <DependentUpon>MyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\HttpService.cs" />
+    <Compile Include="Util\HttpWrapper.cs" />
     <Compile Include="Entity\Panel.cs" />
     <Compile Include="Entity\CharaData.cs" />
     <Compile Include="Entity\MapData.cs" />
-    <Compile Include="Util\EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
