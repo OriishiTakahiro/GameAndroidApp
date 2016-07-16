@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace Hello2 {
 
-	public class PanelData {
+	public class Panel {
 
 		public enum Kind { rock = -3, jewel = -2, portal = -1, empty = 0, up = 1, right = 2, down = 3, left = 4, jump = 5, reverse = 6, start = 7, goal = 8 };
 
@@ -22,12 +22,12 @@ namespace Hello2 {
 			{ Kind.start, "start.png" },
 			{ Kind.goal, "goal.png" }
 		};
-		public static Dictionary<Kind, Func<PanelData, bool>> EFFECSTS = new Dictionary<Kind, Func<PanelData, bool>> {
+		public static Dictionary<Kind, Func<Panel, bool>> EFFECSTS = new Dictionary<Kind, Func<Panel, bool>> {
 			{ Kind.rock, panel => { panel.stayable = false; return false; } },
 			{ Kind.jewel, panel => { 
 					panel.stayable = false;
 					panel.SetEmpty();
-					MapData.mapdat.countupJewel();
+					MapData.entity.countupJewel();
 					return false;
 			}},
 			{ Kind.portal, panel => {
@@ -65,7 +65,7 @@ namespace Hello2 {
 			{ Kind.reverse, panel => {
 					panel.stayable = false;
 					panel.SetEmpty();
-					MapData.mapdat.ResetAllStayable();
+					MapData.entity.ResetAllStayable();
 					return false;
 			}},
 			{ Kind.start, panel => { return false; } },
@@ -78,7 +78,7 @@ namespace Hello2 {
 		public bool stayable { private set; get; }
 
 		// constructor 
-		public PanelData(int kind) {
+		public Panel(int kind) {
 			this.kind = (Kind)kind;
 			this.img = new Image { Source = IMAGES[(Kind)kind], HorizontalOptions = LayoutOptions.Start, WidthRequest = 50 };
 			this.stayable = this.kind != Kind.rock;
@@ -89,7 +89,7 @@ namespace Hello2 {
 			return EFFECSTS[this.kind](this);
 		}
 
-		public string UpdateImg(int kind) {
+		public string ChangeKind(int kind) {
 			this.kind = (Kind)kind;
 			this.img.Source = IMAGES[(Kind)kind];
 			return IMAGES[(Kind)kind];

@@ -10,7 +10,7 @@ namespace Hello2 {
 	public partial class MyPage : ContentPage {
 
 		private int selected_id = -1;   // selected item on item list
-		private bool item_settable;		// allow setting item
+		private bool item_settable;     // allow setting item
 
 		public MyPage(int param) {
 
@@ -29,8 +29,8 @@ namespace Hello2 {
 			this.IsBusy = true;
 			HttpService client = new HttpService("13.71.155.33", "/mapmaker/get_mapdata", new Dictionary<string, string> { { "id", "" + selected_id } });
 			var jmap = JArray.Parse(await client.download());
-			var mapdat = MapData.NewMap(jmap);
-			mapdat.map[0][0].img.Source = "d_man_" + PanelData.IMAGES[mapdat.map[0][0].kind];
+			var mapdat = MapData.New(jmap);
+			mapdat.map[0][0].img.Source = "d_man_" + Panel.IMAGES[mapdat.map[0][0].kind];
 
 			/*	check each label
 						stack.Children.Add(new Label {
@@ -68,7 +68,7 @@ namespace Hello2 {
 					var tmp_panel = panel;
 					tap_gesture_rec.Tapped += (s, e) => {               // callbacked when a image tapped.
 						var kind = (int)tmp_panel.kind;
-						if( 0<=kind && kind<7 ) tmp_panel.UpdateImg(selected_id);
+						if( 0<=kind && kind<7 ) tmp_panel.ChangeKind(selected_id);
 					};
 					panel.img.GestureRecognizers.Add(tap_gesture_rec);    // set callback method on image view
 					row_layout.Children.Add(panel.img);
@@ -96,16 +96,17 @@ namespace Hello2 {
 						(s as Image).BackgroundColor = Color.Aqua;
 					}
 				};
-				var img = new Image { Source = PanelData.IMAGES[(PanelData.Kind)i], HorizontalOptions = LayoutOptions.Start, WidthRequest = 50 };
+				var img = new Image { Source = Panel.IMAGES[(Panel.Kind)i], HorizontalOptions = LayoutOptions.Start, WidthRequest = 50 };
 				img.GestureRecognizers.Add(tap_gesture_rec);    // set callback method on image view
 				items_layout.Children.Add(img);
 			}
 
 			var start_btn = new Button { Text = "決定" };
-			var jewel_counter = new Label { Text = MapData.mapdat.jewel_count + "/" + MapData.mapdat.jewel_max };
+			var jewel_counter = new Label { Text = MapData.entity.jewel_count + "/" + MapData.entity.jewel_max };
 			var chara = CharaData.chardat;
 			// Start action
 			start_btn.Clicked += async (s, e) => {
+				MapData.entity.Backup();
 				item_settable = false;
 				var is_goal = false;
 				while (!is_goal) {
@@ -117,9 +118,9 @@ namespace Hello2 {
 					}
 					if (i == 4) break;
 					is_goal = chara.Move();
-					jewel_counter.Text = MapData.mapdat.jewel_count + "/" + MapData.mapdat.jewel_max;
+					jewel_counter.Text = MapData.entity.jewel_count + "/" + MapData.entity.jewel_max;
 				}
-				if (is_goal && MapData.mapdat.jewel_max == MapData.mapdat.jewel_count) GameClear();
+				if (is_goal && MapData.entity.jewel_max == MapData.entity.jewel_count) GameClear();
 				else GameOver();
 			};
 			items_layout.Children.Add(start_btn);
@@ -131,12 +132,17 @@ namespace Hello2 {
 		// --- Transaction for GameOver ---
 		private async void GameOver() {
 			await DisplayAlert("Game Over", "ゴールできませんでした.", "終了");
+			var mapdat = MapData.entity;
+	        mapdat.ReproductionFromBackup();
+			CharaData.chardat.ReturnStart();
+			mapdat.map[0][0].img.Source = "d_man_" + Panel.IMAGES[mapdat.map[0][0].kind];
+			this.item_settable = true;
 		}
 		// --- Transaction for GameOver ---
 
 		// --- Transaction for GameClear ---
 		private async void GameClear() {
-			await DisplayAlert("Game Clear", "おめでとうございます!! ゴールしました!!", "終了");
+			await DisplayAlert("Game Clear", "おめでとうございます!! ゴールしました!!", "リトライ");
 		}
 		// --- Transaction for GameClear ---
 	}

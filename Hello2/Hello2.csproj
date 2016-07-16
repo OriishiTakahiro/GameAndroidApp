@@ -48,7 +48,7 @@
       <DependentUpon>MyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\HttpService.cs" />
-    <Compile Include="Entity\PanelData.cs" />
+    <Compile Include="Entity\Panel.cs" />
     <Compile Include="Entity\CharaData.cs" />
     <Compile Include="Entity\MapData.cs" />
     <Compile Include="Util\EmptyClass.cs" />

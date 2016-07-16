@@ -34,13 +34,14 @@ namespace Hello2 {
 		// warp to start panel
 		public void ReturnStart() {
 			this.x = 0; this.y = 0;
+			this.direction = 1;
 		}
 
 		// move to forward
 		public bool Move() {
-			var map = MapData.mapdat.map;
+			var map = MapData.entity.map;
 
-			map[this.y][this.x].UpdateImg((int)map[this.y][this.x].kind);	// change img of panel which previous location.
+			map[this.y][this.x].ChangeKind((int)map[this.y][this.x].kind);	// change img of panel which previous location.
 
 			switch (this.direction) {
 				case 0: // up
@@ -58,14 +59,14 @@ namespace Hello2 {
 			}
 			if (jumping) jumping = false;
 
-			map[this.y][this.x].img.Source = "d_man_" + PanelData.IMAGES[map[this.y][this.x].kind];	// change img of panel which new location.
+			map[this.y][this.x].img.Source = "d_man_" + Panel.IMAGES[map[this.y][this.x].kind];	// change img of panel which new location.
 
 			return map[this.y][this.x].ActivateEffect();
 		}
 
 		// character can move to forward?
 		public bool CanMove() {
-			var map = MapData.mapdat.map;
+			var map = MapData.entity.map;
 			int tmp_x = this.x, tmp_y = this.y;
 			switch (this.direction) {
 				case 0: // up
@@ -85,8 +86,8 @@ namespace Hello2 {
 					else return false;
 					break;
 			}
-			var next_panel = MapData.mapdat.map[tmp_y][tmp_x];
-			return next_panel.stayable || (next_panel.kind==PanelData.Kind.rock && this.jumping);
+			var next_panel = MapData.entity.map[tmp_y][tmp_x];
+			return next_panel.stayable || (next_panel.kind==Panel.Kind.rock && this.jumping);
 		}
 
 	}
