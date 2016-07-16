@@ -5,9 +5,9 @@ using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 
 namespace Hello2 {
-	public class MapData {
+	public class Map {
 
-		public static MapData entity { private set; get; }
+		public static Map entity { private set; get; }
 
 		public Panel[][] map { private set; get; }
 		public int jewel_max { private set; get; }
@@ -16,7 +16,7 @@ namespace Hello2 {
 		public int[][] backup;
 
 		// instantiate entitya
-		private MapData(JArray mapdat) {
+		private Map(JArray mapdat) {
 
 			map = new Panel[mapdat.Count][];
 			int i = 0;
@@ -37,8 +37,8 @@ namespace Hello2 {
 		//
 
 		// instantiate and get new mapdata
-		public static MapData New(JArray jarr) {
-			entity = new MapData(jarr);
+		public static Map New(JArray jarr) {
+			entity = new Map(jarr);
 			return entity;
 		}
 
@@ -71,7 +71,18 @@ namespace Hello2 {
 
 		// methods for jewel
 		public string GetJewelMsg() { return $"宝石 : {this.jewel_count}/{this.jewel_max}"; }
-		public void countupJewel() { jewel_count++; }
+		public void CountupJewel() { jewel_count++; }
 
+		// methods for Cost
+		public string GetCostMsg() { return $"コスト : {this.GetTotalCost()}"; }
+		public int GetTotalCost() {
+			int sum= 0;
+			foreach (var row in this.map) {
+				foreach (var panel in row) {
+					sum += panel.GetCost();
+				}
+			}
+			return sum;
+		}
 	}
 }

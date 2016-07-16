@@ -2,10 +2,10 @@
 using Xamarin.Forms;
 
 namespace Hello2 {
-	public class CharaData {
+	public class Player {
 
 		// singleton instance
-		public static CharaData entity { private set; get; }
+		public static Player entity { private set; get; }
 
 		// --  chracter's data --
 		public int direction { set;  get; }
@@ -14,7 +14,7 @@ namespace Hello2 {
 		public bool jumping { private set; get; }
 		// --  chracter's data --
 
-		private CharaData() {
+		private Player() {
 			this.direction = 1;
 			this.x = 0;
 			this.y = 0;
@@ -26,7 +26,7 @@ namespace Hello2 {
 		//
 
 		public static void Init() {
-			entity = new CharaData();
+			entity = new Player();
 		}
 
 
@@ -49,7 +49,7 @@ namespace Hello2 {
 
 		// move to forward
 		public bool Move() {
-			var map = MapData.entity.map;
+			var map = Map.entity.map;
 
 			map[this.y][this.x].ChangeKind((int)map[this.y][this.x].kind);	// change img of panel which previous location.
 
@@ -76,7 +76,7 @@ namespace Hello2 {
 
 		// character can move to forward?
 		public bool CanMove() {
-			var map = MapData.entity.map;
+			var map = Map.entity.map;
 			int tmp_x = this.x, tmp_y = this.y;
 			switch (this.direction) {
 				case 0: // up
@@ -96,8 +96,8 @@ namespace Hello2 {
 					else return false;
 					break;
 			}
-			var next_panel = MapData.entity.map[tmp_y][tmp_x];
-			return next_panel.stayable || (next_panel.kind==Panel.Kind.rock && this.jumping);
+			var next_panel = Map.entity.map[tmp_y][tmp_x];
+			return next_panel.stayable || (next_panel.kind == Panel.Kind.rock && this.jumping);
 		}
 
 	}

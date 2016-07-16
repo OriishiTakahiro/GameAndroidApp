@@ -27,51 +27,53 @@ namespace Hello2 {
 			{ Kind.jewel, panel => { 
 					panel.stayable = false;
 					panel.SetEmpty();
-					MapData.entity.countupJewel();
+					Map.entity.CountupJewel();
 					return false;
 			}},
 			{ Kind.portal, panel => {
 					panel.stayable = false;
 					panel.SetEmpty();
-					CharaData.entity.ReturnStart();
+					Player.entity.ReturnStart();
 					return false;
 			}},
 			{ Kind.empty, panel => { panel.stayable = false; return false; } },
 			{ Kind.up, panel => { 
 					panel.stayable = false;
-					CharaData.entity.direction = 0;
+					Player.entity.direction = 0;
 					return false;
 			}},
 			{ Kind.right, panel => {
 					panel.stayable = false;
-					CharaData.entity.direction = 1;
+					Player.entity.direction = 1;
 					return false;
 			} },
 			{ Kind.down, panel => {
 					panel.stayable = false;
-					CharaData.entity.direction = 2;
+					Player.entity.direction = 2;
 					return false;
 			}},
 			{ Kind.left, panel => {
 					panel.stayable = false;
-					CharaData.entity.direction = 3;
+					Player.entity.direction = 3;
 					return true;
 			}},
 			{ Kind.jump, panel => {
 					panel.stayable = false;
-					CharaData.entity.Jump();
+					Player.entity.Jump();
 					return false;
 			}},
 			{ Kind.reverse, panel => {
 					panel.stayable = false;
 					panel.SetEmpty();
-					MapData.entity.ResetAllStayable();
+					Map.entity.ResetAllStayable();
 					return false;
 			}},
 			{ Kind.start, panel => { return false; } },
 			{ Kind.goal, panel => { return true; } },
 		};
-
+		private static Dictionary<Kind, int> COSTS = new Dictionary<Kind, int> {
+			{ Kind.up, 1 }, { Kind.right, 1}, {Kind.down, 1}, {Kind.left, 1}, { Kind.jump, 3 }, { Kind.reverse, 8 }
+		};
 
 		public Kind kind { private set; get; }
 		public Image img { private set; get; }
@@ -95,10 +97,15 @@ namespace Hello2 {
 			return IMAGES[(Kind)kind];
 		}
 
-
 		public void ResetStayable() { this.stayable = true; }
 
+		public int GetCost() {
+			if (COSTS.ContainsKey(this.kind)) return COSTS[this.kind];
+			else return 0;
+		}
+
 		private void SetEmpty() { this.kind = 0; }
+
 
 	}
 }

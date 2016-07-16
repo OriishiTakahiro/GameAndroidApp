@@ -49,8 +49,8 @@
     </Compile>
     <Compile Include="Util\HttpWrapper.cs" />
     <Compile Include="Entity\Panel.cs" />
-    <Compile Include="Entity\CharaData.cs" />
-    <Compile Include="Entity\MapData.cs" />
+    <Compile Include="Entity\Player.cs" />
+    <Compile Include="Entity\Map.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
