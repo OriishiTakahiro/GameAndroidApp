@@ -27,26 +27,30 @@ namespace Hello2 {
 
 		private async void GetMapData() {
 			this.IsBusy = true;
-			HttpWrapper client = new HttpWrapper("13.71.155.33", "/mapmaker/get_mapdata", new Dictionary<string, string> { { "id", "" + selected_id } });
-			var jmap = JArray.Parse(await client.GetMsg());
-			var mapdat = MapData.New(jmap);
-			mapdat.map[0][0].img.Source = "d_man_" + Panel.IMAGES[mapdat.map[0][0].kind];
+			HttpWrapper client = new HttpWrapper("/get_mapdata", new Dictionary<string, string> { { "id", "" + selected_id } });
+			string response = await client.GetMsg();
+			if (response != null) {
+				var jmap = JArray.Parse(response);
+				var mapdat = MapData.New(jmap);
+				mapdat.map[0][0].img.Source = "d_man_" + Panel.IMAGES[mapdat.map[0][0].kind];
 
-			/*	check each label
-						stack.Children.Add(new Label {
-							Text = mapdat.map.Select(
-								row => row.Select(panel => (int)panel.kind + ",").Aggregate((acc, str) => acc + str)
-							).Aggregate((acc, str) => acc + "\n" + str)
-						});
-			*/
+				/*	check each label
+							stack.Children.Add(new Label {
+								Text = mapdat.map.Select(
+									row => row.Select(panel => (int)panel.kind + ",").Aggregate((acc, str) => acc + str)
+								).Aggregate((acc, str) => acc + "\n" + str)
+							});
+				*/
 
-			var entire = new StackLayout { Padding = 10, Orientation = StackOrientation.Horizontal };
-			// set map
-			entire.Children.Add(NewMapLayout(mapdat));
-			// set item list
-			entire.Children.Add(NewItemsLayout());
-			Content = entire;
-
+				var entire = new StackLayout { Padding = 10, Orientation = StackOrientation.Horizontal };
+				// set map
+				entire.Children.Add(NewMapLayout(mapdat));
+				// set item list
+				entire.Children.Add(NewItemsLayout());
+				Content = entire;
+			} else {
+				await DisplayAlert("Error", "マップが読み取れませんでした", "OK");
+			}
 			this.IsBusy = false;
 		}
 
@@ -101,12 +105,13 @@ namespace Hello2 {
 				items_layout.Children.Add(img);
 			}
 
-			var start_btn = new Button { Text = "決定" };
-			var jewel_counter = new Label { Text = MapData.entity.jewel_count + "/" + MapData.entity.jewel_max };
-			var chara = CharaData.chardat;
-			// Start action
+			var map = MapData.entity;
+			var chara = CharaData.entity;
+			// Set start button
+			var start_btn = new Button { Text = "スタート" };
+			var jewel_counter = new Label { Text = map.GetJewelMsg() };
 			start_btn.Clicked += async (s, e) => {
-				MapData.entity.Backup();
+				map.Backup();
 				item_settable = false;
 				var is_goal = false;
 				while (!is_goal) {
@@ -118,9 +123,9 @@ namespace Hello2 {
 					}
 					if (i == 4) break;
 					is_goal = chara.Move();
-					jewel_counter.Text = MapData.entity.jewel_count + "/" + MapData.entity.jewel_max;
+					jewel_counter.Text = map.GetJewelMsg();
 				}
-				if (is_goal && MapData.entity.jewel_max == MapData.entity.jewel_count) GameClear();
+				if (is_goal && map.jewel_max == map.jewel_count) GameClear();
 				else GameOver();
 			};
 			items_layout.Children.Add(start_btn);
@@ -131,10 +136,10 @@ namespace Hello2 {
 
 		// --- Transaction for GameOver ---
 		private async void GameOver() {
-			await DisplayAlert("Game Over", "ゴールできませんでした.", "終了");
+			await DisplayAlert("Game Over", "ゴールできませんでした.", "リトライ");
 			var mapdat = MapData.entity;
 	        mapdat.ReproductionFromBackup();
-			CharaData.chardat.ReturnStart();
+			CharaData.entity.ReturnStart();
 			mapdat.map[0][0].img.Source = "d_man_" + Panel.IMAGES[mapdat.map[0][0].kind];
 			this.item_settable = true;
 		}
@@ -142,7 +147,7 @@ namespace Hello2 {
 
 		// --- Transaction for GameClear ---
 		private async void GameClear() {
-			await DisplayAlert("Game Clear", "おめでとうございます!! ゴールしました!!", "リトライ");
+			await DisplayAlert("Game Clear", "おめでとうございます!! ゴールしました!!", "終了");
 		}
 		// --- Transaction for GameClear ---
 	}

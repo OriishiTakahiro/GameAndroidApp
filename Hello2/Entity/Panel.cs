@@ -33,33 +33,33 @@ namespace Hello2 {
 			{ Kind.portal, panel => {
 					panel.stayable = false;
 					panel.SetEmpty();
-					CharaData.chardat.ReturnStart();
+					CharaData.entity.ReturnStart();
 					return false;
 			}},
 			{ Kind.empty, panel => { panel.stayable = false; return false; } },
 			{ Kind.up, panel => { 
 					panel.stayable = false;
-					CharaData.chardat.direction = 0;
+					CharaData.entity.direction = 0;
 					return false;
 			}},
 			{ Kind.right, panel => {
 					panel.stayable = false;
-					CharaData.chardat.direction = 1;
+					CharaData.entity.direction = 1;
 					return false;
 			} },
 			{ Kind.down, panel => {
 					panel.stayable = false;
-					CharaData.chardat.direction = 2;
+					CharaData.entity.direction = 2;
 					return false;
 			}},
 			{ Kind.left, panel => {
 					panel.stayable = false;
-					CharaData.chardat.direction = 3;
+					CharaData.entity.direction = 3;
 					return true;
 			}},
 			{ Kind.jump, panel => {
 					panel.stayable = false;
-					CharaData.chardat.Jump();
+					CharaData.entity.Jump();
 					return false;
 			}},
 			{ Kind.reverse, panel => {
@@ -95,8 +95,10 @@ namespace Hello2 {
 			return IMAGES[(Kind)kind];
 		}
 
+
 		public void ResetStayable() { this.stayable = true; }
 
 		private void SetEmpty() { this.kind = 0; }
+
 	}
 }

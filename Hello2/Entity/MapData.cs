@@ -32,11 +32,20 @@ namespace Hello2 {
 
 		}
 
+		//
+		// --- static method --- //
+		//
+
 		// instantiate and get new mapdata
 		public static MapData New(JArray jarr) {
 			entity = new MapData(jarr);
 			return entity;
 		}
+
+
+		//
+		// --- non static method --- //
+		//
 
 		// reset all panels stayable flag
 		public void ResetAllStayable() {
@@ -47,14 +56,7 @@ namespace Hello2 {
 			}
 		}
 
-		public void countupJewel() {
-			jewel_count++;
-		}
-
-
-		public void Backup() {
-			this.backup = this.map.Select( row => row.Select(panel => (int)panel.kind).ToArray() ).ToArray();
-		}
+		public void Backup() { this.backup = this.map.Select( row => row.Select(panel => (int)panel.kind).ToArray() ).ToArray(); }
 
 		public void ReproductionFromBackup() {
 			for (var i = 0; i < this.map.Length; i ++) {
@@ -66,6 +68,10 @@ namespace Hello2 {
 			this.jewel_count = 0;
 			this.ResetAllStayable();
 		}
+
+		// methods for jewel
+		public string GetJewelMsg() { return $"宝石 : {this.jewel_count}/{this.jewel_max}"; }
+		public void countupJewel() { jewel_count++; }
 
 	}
 }

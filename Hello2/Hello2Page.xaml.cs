@@ -15,18 +15,21 @@ namespace Hello2 {
 		}
 		private async void loadData() {
 			this.IsBusy = true;
-			var client = new HttpWrapper("13.71.155.33", "/mapmaker/get_maplist", null);
+			var client = new HttpWrapper("/get_maplist", null);
 			string response = await client.GetMsg();
-			var jarr = JArray.Parse(response);
+			if (response != null) {
+				var jarr = JArray.Parse(response);
+				ListView maplist = ListViewComponent;
+				maplist.ItemTemplate = new DataTemplate(typeof(MapCell));
+				maplist.ItemsSource = jarr.ToObject<List<MapCaption>>();
 
-			ListView maplist = ListViewComponent;
-			maplist.ItemTemplate = new DataTemplate(typeof(MapCell));
-			maplist.ItemsSource = jarr.ToObject<List<MapCaption>>();
-
-			maplist.ItemSelected += async (sender, e) => {
-				if (e.SelectedItem == null) return;
-				await Navigation.PushModalAsync( new MyPage((e.SelectedItem as MapCaption).id) );
-			};
+				maplist.ItemSelected += async (sender, e) => {
+					if (e.SelectedItem == null) return;
+					await Navigation.PushModalAsync(new MyPage((e.SelectedItem as MapCaption).id));
+				};
+			} else {
+				await DisplayAlert("Error", "マップ一覧の取得に失敗しました.", "OK");
+			}
 			this.IsBusy = false;
 		}
 	}

@@ -5,7 +5,7 @@ namespace Hello2 {
 	public class CharaData {
 
 		// singleton instance
-		public static CharaData chardat { private set; get; }
+		public static CharaData entity { private set; get; }
 
 		// --  chracter's data --
 		public int direction { set;  get; }
@@ -21,9 +21,19 @@ namespace Hello2 {
 			this.jumping = false;
 		}
 
+		//
+		// --- static method --- //
+		//
+
 		public static void Init() {
-			chardat = new CharaData();
+			entity = new CharaData();
 		}
+
+
+		//
+		// --- non static method --- //
+		//
+
 
 		// rotate clock wise
 		public void RotateDir() { this.direction = (this.direction + 1) % 4; }
@@ -91,6 +101,4 @@ namespace Hello2 {
 		}
 
 	}
-
 }
-
