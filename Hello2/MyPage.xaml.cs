@@ -9,7 +9,8 @@ using Xamarin.Forms;
 namespace Hello2 {
 	public partial class MyPage : ContentPage {
 
-		private int selected_id = -1;   // selected item on item list
+		private int selected_id = -1;
+		private int selected_item = -1; // selected item on item list
 		private bool item_settable;     // allow setting item
 
 		private Label cost_label;
@@ -62,7 +63,7 @@ namespace Hello2 {
 					var tmp_panel = panel;
 					tap_gesture_rec.Tapped += (s, e) => {               // callbacked when a image tapped.
 						var kind = (int)tmp_panel.kind;
-						if( 0<=kind && kind<7 ) tmp_panel.ChangeKind(selected_id);
+						if( 0<=kind && kind<7 ) tmp_panel.ChangeKind(selected_item);
 						cost_label.Text = Map.entity.GetCostMsg();
 					};
 					panel.img.GestureRecognizers.Add(tap_gesture_rec);    // set callback method on image view
@@ -92,7 +93,7 @@ namespace Hello2 {
                // generate a callback recognizer
 				tap_gesture_rec.Tapped += (s, e) => {
 					if (item_settable) {
-						selected_id = tmp_i;
+						selected_item = tmp_i;
 						foreach (var item in items_layout.Children) {
 							if (item as Image != null) (item as Image).BackgroundColor = Color.Transparent;
 						}
@@ -141,6 +142,8 @@ namespace Hello2 {
 		// --- Transaction for GameClear ---
 		private async void GameClear() {
 			await DisplayAlert("Game Clear", $"おめでとうございます! ゴールしました!! \n {Map.entity.GetCostMsg()}", "OK");
+			HttpWrapper client = new HttpWrapper("/post_report", new Dictionary<string, string> { { "id", $"{selected_id}" }, {"cost", $"{Map.entity.GetTotalCost()}"} });
+			client.Post();
 			ResetMapCondition();
 		}
 		// --- Transaction for GameClear ---

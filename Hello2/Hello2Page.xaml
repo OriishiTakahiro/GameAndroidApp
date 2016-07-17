@@ -6,7 +6,7 @@
 			Text="ボタン迷宮"
 			HorizontalOptions="Center"
 			VerticalOptions="Center"
-			FontSize="60"
+			FontSize="Large"
 		/>
 		<Label
 			Text="挑戦するステージを選んでね."
