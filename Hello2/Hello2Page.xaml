@@ -5,12 +5,12 @@
 		<Label
 			Text="ボタン迷宮"
 			HorizontalOptions="Center"
-			VerticalOptions="Center"
 			FontSize="Large"
 		/>
 		<Label
 			Text="挑戦するステージを選んでね."
 		/>
+		<StackLayout x:Name="TableHeader" Orientation="Horizontal"/>
 		<ScrollView VerticalOptions ="LayoutOptions.FillAndExpand">
 			<ListView x:Name="ListViewComponent" RowHeight="50"/>
 		</ScrollView>

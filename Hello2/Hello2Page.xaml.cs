@@ -83,7 +83,7 @@ namespace Hello2 {
 			labels[3].SetBinding(Label.TextProperty, new Binding("cleared", stringFormat: "{0}回"));
 
 			labels[4] = new Label { WidthRequest = Hello2Page.page.Width * 0.075 };
-			labels[4].SetBinding(Label.TextProperty, new Binding("min_cost", stringFormat: "{0}Pt"));
+			labels[4].SetBinding(Label.TextProperty, new Binding("min_cost", stringFormat: "{0}"));
 
 			labels[5] = new Label { WidthRequest = Hello2Page.page.Width * 0.3 };
 			labels[5].SetBinding(Label.TextProperty, "created_at");
