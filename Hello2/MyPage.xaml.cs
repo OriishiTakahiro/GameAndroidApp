@@ -98,7 +98,7 @@ namespace Hello2 {
 						foreach (var row in items_layout.Children) {
 							if (row as StackLayout != null) (row as StackLayout).Children[0].BackgroundColor = Color.Transparent;
 						}
-						(s as StackLayout).Children[0].BackgroundColor = Color.Aqua;
+						(s as Image).BackgroundColor = Color.Aqua;
 					}
 				};
 				var item = new ItemView(i);
