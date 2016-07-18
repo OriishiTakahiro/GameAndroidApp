@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -94,15 +95,15 @@ namespace Hello2 {
 				tap_gesture_rec.Tapped += (s, e) => {
 					if (item_settable) {
 						selected_item = tmp_i;
-						foreach (var item in items_layout.Children) {
-							if (item as Image != null) (item as Image).BackgroundColor = Color.Transparent;
+						foreach (var row in items_layout.Children) {
+							if (row as StackLayout != null) (row as StackLayout).Children[0].BackgroundColor = Color.Transparent;
 						}
-						(s as Image).BackgroundColor = Color.Aqua;
+						(s as StackLayout).Children[0].BackgroundColor = Color.Aqua;
 					}
 				};
-				var img = new Image { Source = Panel.IMAGES[(Panel.Kind)i], HorizontalOptions = LayoutOptions.Start, WidthRequest = 50 };
-				img.GestureRecognizers.Add(tap_gesture_rec);    // set callback method on image view with a callback recognizer
-				items_layout.Children.Add(img);
+				var item = new ItemView(i);
+				item.item_img.GestureRecognizers.Add(tap_gesture_rec);    // set callback method on image view with a callback recognizer
+				items_layout.Children.Add(item.View);
 			}
 
 			// Set start button's action
@@ -154,6 +155,17 @@ namespace Hello2 {
 			Player.entity.ReturnStart();
 			mapdat.map[0][0].img.Source = "d_man_" + Panel.IMAGES[mapdat.map[0][0].kind];
 			this.item_settable = true;
+		}
+		private class ItemView : ViewCell {
+
+			public Image item_img;
+			public Label cost_view;
+
+			public ItemView(int kind) {
+				item_img = new Image { Source = Panel.IMAGES[(Panel.Kind)kind], HorizontalOptions = LayoutOptions.Start, WidthRequest = 50 };
+				cost_view = new Label() { Text = $"{Panel.GetCost(kind)}"};
+				View = new StackLayout { Orientation = StackOrientation.Horizontal, Children = { this.item_img, this.cost_view } };
+			}
 		}
 	}
 

@@ -71,7 +71,7 @@ namespace Hello2 {
 			{ Kind.start, panel => { return false; } },
 			{ Kind.goal, panel => { return true; } },
 		};
-		private static Dictionary<Kind, int> COSTS = new Dictionary<Kind, int> {
+		public readonly static Dictionary<Kind, int> COSTS = new Dictionary<Kind, int> {
 			{ Kind.up, 1 }, { Kind.right, 1}, {Kind.down, 1}, {Kind.left, 1}, { Kind.jump, 3 }, { Kind.reverse, 8 }
 		};
 
@@ -101,6 +101,10 @@ namespace Hello2 {
 
 		public int GetCost() {
 			if (COSTS.ContainsKey(this.kind)) return COSTS[this.kind];
+			else return 0;
+		}
+		public static int GetCost(int kind) {
+			if (COSTS.ContainsKey((Kind)kind)) return COSTS[(Kind)kind];
 			else return 0;
 		}
 
